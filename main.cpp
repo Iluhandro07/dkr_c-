@@ -1,13 +1,21 @@
 #include <iostream>
 #include "DigitalMessage.h"
 #include "MessageProcessor.h"
+#include "Logger.h"
 
 using namespace std;
 
 int main()
 {
+    Logger logger;
+
+    logger.clear();
+    logger.log("Program started");
+
     DigitalMessage message("1011001");
     MessageProcessor processor;
+
+    logger.log("Original message created");
 
     cout << "=== DKR OOP Variant 16 ===" << endl;
     cout << endl;
@@ -22,11 +30,15 @@ int main()
 
     DigitalMessage crc = processor.calculateCRC(message);
 
+    logger.log("CRC calculated");
+
     cout << "CRC-4: ";
     crc.show();
     cout << endl;
 
     DigitalMessage transmittedMessage = processor.addCRC(message);
+
+    logger.log("CRC added to message");
 
     cout << "Transmitted message: ";
     transmittedMessage.show();
@@ -37,16 +49,20 @@ int main()
 
     if (processor.checkIntegrity(transmittedMessage))
     {
+        logger.log("Message without error: valid");
         cout << "Result: message is valid" << endl;
     }
     else
     {
+        logger.log("Message without error: error detected");
         cout << "Result: error detected" << endl;
     }
 
     cout << endl;
 
     DigitalMessage errorMessage = processor.introduceError(transmittedMessage, 3);
+
+    logger.log("One-bit error introduced");
 
     cout << "Message with one-bit error: ";
     errorMessage.show();
@@ -56,10 +72,12 @@ int main()
 
     if (processor.checkIntegrity(errorMessage))
     {
+        logger.log("Message without error: valid");
         cout << "Result: message is valid" << endl;
     }
     else
     {
+        logger.log("Message without error: error detected");
         cout << "Result: error detected" << endl;
     }
 

@@ -1,0 +1,7 @@
+Program started
+Original message created
+CRC calculated
+CRC added to message
+Message without error: valid
+One-bit error introduced
+Message without error: error detected
