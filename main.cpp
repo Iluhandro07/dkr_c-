@@ -2,18 +2,22 @@
 #include "DigitalMessage.h"
 #include "MessageProcessor.h"
 #include "Logger.h"
+#include "FileStorage.h"
 
 using namespace std;
 
 int main()
 {
     Logger logger;
+    FileStorage storage;
 
+    storage.clear();
     logger.clear();
     logger.log("Program started");
 
     DigitalMessage message("1011001");
     MessageProcessor processor;
+    storage.saveMessage(message);
 
     logger.log("Original message created");
 
@@ -37,6 +41,7 @@ int main()
     cout << endl;
 
     DigitalMessage transmittedMessage = processor.addCRC(message);
+    storage.saveMessage(transmittedMessage);
 
     logger.log("CRC added to message");
 
@@ -61,6 +66,7 @@ int main()
     cout << endl;
 
     DigitalMessage errorMessage = processor.introduceError(transmittedMessage, 3);
+    storage.saveMessage(errorMessage);
 
     logger.log("One-bit error introduced");
 

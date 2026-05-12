@@ -129,3 +129,17 @@ void DigitalMessage::show()
         cout << m_bits[i];
     }
 }
+
+char* DigitalMessage::toString()
+{
+    char* result = new char[m_size + 1];
+
+    for (int i = 0; i < m_size; i++)
+    {
+       result[i] = m_bits[i] + '0';
+    }
+
+    result[m_size] = '\0';
+
+    return result;
+}
